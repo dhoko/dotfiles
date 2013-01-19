@@ -1,0 +1,78 @@
+
+alias l='ls -CF'
+alias la='ls -alF'
+alias ll='ls -lF'
+alias la='ls -alF'
+alias ll='ls -lF'
+alias l='ls -CF'
+alias alert_helper='history|tail -n1|sed -e "s/^\s*[0-9]\+\s*//" -e "s/;\s*alert$//"'
+alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png "[0] "'
+
+alias laravel='~/dev/laravel.sh'
+
+alias pi='ssh pi@192.168.0.22'
+alias wpi='ssh www-data@192.168.0.22'
+alias gis='git status'
+function commit() {
+  git commit -a -m "$@"
+}
+alias gpush='git push origin '
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+#Build a local server on :8000 to serve static file
+function server() {
+	#local port="${1:-8000}"
+	#open "http://localhost:${port}/"
+	python -m SimpleHTTPServer
+}
+
+#Build in PHP server
+alias phpserver='php -S localhost:8000'
+
+#get my public IP
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+
+# Extract archives - use: extract <file>
+# Credits to http://dotfiles.org/~pseup/.bashrc
+function extract() {
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2) tar xjf $1 ;;
+			*.tar.gz) tar xzf $1 ;;
+			*.bz2) bunzip2 $1 ;;
+			*.rar) rar x $1 ;;
+			*.gz) gunzip $1 ;;
+			*.tar) tar xf $1 ;;
+			*.tbz2) tar xjf $1 ;;
+			*.tgz) tar xzf $1 ;;
+			*.zip) unzip $1 ;;
+			*.Z) uncompress $1 ;;
+			*.7z) 7z x $1 ;;
+			*) echo "'$1' cannot be extracted via extract()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
+
+
+alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
+alias johnny='echo "ha que coucou"'
