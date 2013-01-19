@@ -1,0 +1,20 @@
+{
+	"color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Eighties.tmTheme",
+	"font_face": "Droid Sans Mono",
+	"font_size": 12.0,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"ASP",
+		"Java",
+		"C#",
+		"Vintage",
+		"AppleScript",
+		"SublimeTagmatcher",
+		"ActionScript"
+	],
+	"line_padding_bottom": 2,
+	"line_padding_top": 2,
+	"theme": "Nexus.sublime-theme",
+	"word_wrap": true
+}

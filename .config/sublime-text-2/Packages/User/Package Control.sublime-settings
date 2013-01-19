@@ -1,0 +1,14 @@
+{
+	"auto_upgrade_last_run": null,
+	"installed_packages":
+	[
+		"Alignment",
+		"Open-Include",
+		"Package Control",
+		"Prefixr",
+		"Pretty JSON",
+		"Theme - Nexus",
+		"Tomorrow Color Schemes",
+		"ZenCoding"
+	]
+}
