@@ -77,3 +77,4 @@ function extract() {
 
 alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
 alias johnny='echo "ha que coucou"'
+alias bashsource='source ~/.bashrc'
