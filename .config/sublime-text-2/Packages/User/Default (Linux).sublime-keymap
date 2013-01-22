@@ -1,2 +1,51 @@
 [
+	{
+		"keys": ["alt+o"],
+		"command": "set_layout",
+		"args":
+		{
+			"cols": [0.0, 1.0],
+			"rows": [0.0, 1.0],
+			"cells": [[0, 0, 1, 1]]
+		}
+	},
+	{
+		"keys": ["alt+i"],
+		"command": "set_layout",
+		"args":
+		{
+			"cols": [0.0, 0.5, 1.0],
+			"rows": [0.0, 1.0],
+			"cells": [[0, 0, 1, 1], [1, 0, 2, 1]]
+		}
+	},
+	{
+		"keys": ["alt+p"],
+		"command": "set_layout",
+		"args":
+		{
+			"cols": [0.0, 0.5, 1.0],
+			"rows": [0.0, 0.5, 1.0],
+			"cells":
+			[
+				[0, 0, 1, 1], [1, 0, 2, 1],
+				[0, 1, 1, 2], [1, 1, 2, 2]
+			]
+		}
+	},
+	{
+		"keys": ["alt+u"],
+	    "caption": "1. Full - 2. 2 columns",
+	    "command": "set_layout",
+	    "args":
+	    {
+	        "cols": [0.0, 0.5, 1.0],
+	        "rows": [0.0, 0.5, 1.0],
+	        "cells":
+	        [
+	            [0, 0, 2, 1], 
+	            [0, 1, 1, 2], [1, 1, 2, 2]
+	        ]
+	    }
+	}
 ]
