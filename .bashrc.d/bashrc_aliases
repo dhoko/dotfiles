@@ -17,6 +17,8 @@ function commit() {
   git commit -a -m "$@"
 }
 alias gpush='git push origin '
+alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
