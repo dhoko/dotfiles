@@ -80,3 +80,6 @@ function extract() {
 alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
 alias johnny='echo "ha que coucou"'
 alias bashsource='source ~/.bashrc'
+
+# Convert to base 64 a file - call alias with filename
+alias to64='openssl base64 -in '
