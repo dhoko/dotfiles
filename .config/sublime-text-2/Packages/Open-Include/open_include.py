@@ -1,7 +1,7 @@
 import sublime, sublime_plugin
 import os.path
 import re
-import thread
+import threading
 
 BINARY = re.compile('\.(apng|png|jpg|gif|jpeg|bmp|psd|ai|cdr|ico|cache|sublime-package|eot|svgz|ttf|woff|zip|tar|gz|rar|bz2|jar|xpi|mov|mpeg|avi|mpg|flv|wmv|mp3|wav|aif|aiff|snd|wma|asf|asx|pcm|pdf|doc|docx|xls|xlsx|ppt|pptx|rtf|sqlite|sqlitedb|fla|swf|exe)$', re.I);
 
@@ -19,9 +19,19 @@ class OpenInclude(sublime_plugin.TextCommand):
 			opened = False
 
 			# between quotes
-			syntax = self.view.syntax_name(region.begin())
+			syntax = self.view.scope_name(region.begin())
 			if re.match(".*string.quoted.double", syntax) or re.match(".*string.quoted.single", syntax):
 				opened = self.resolve_path(window, view, view.substr(view.extract_scope(region.begin())))
+
+				if s.get('create_if_not_exists'):
+					path = self.resolve_relative(os.path.dirname(view.file_name()), view.substr(view.extract_scope(region.begin())).replace("'", '').replace('"', '') )
+					branch, leaf = os.path.split(path)
+					try:
+						os.makedirs(branch)
+					except:
+						pass
+					window.open_file(path)
+					return True;
 
 			# selected text
 			if not opened:
@@ -86,7 +96,6 @@ class OpenInclude(sublime_plugin.TextCommand):
 
 				# remove :row:col
 				path = re.sub('(\:[0-9]*)+$', '', path.strip()).strip()
-
 
 				newpath = path + extension
 

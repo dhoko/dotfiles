@@ -1,7 +1,13 @@
 This Zen Coding plugin is outdated and will never receive
-any updates in future. In two weeks the repo will be unpublished.
+any updates in future. In two weeks the repo will <s>be unpublished.</s>
 
-Consider switching to Emmet -- a re-branded Zen Coding project 
+
+        Tue Feb 12 13:13:52 2013:
+
+            AS PORTENDED 3 MONTHS PRIOR THIS REPO HAS BEEN UNPUBLISHED
+
+
+Consider switching to Emmet -- a re-branded Zen Coding project
 packed with new awesome features:
 
 * Dynamic CSS abbreviations, automatic vendor prefixes and gradient generator.
@@ -12,8 +18,8 @@ packed with new awesome features:
 * New ^ operator.
 * Various fixes and improvements.
 
-The new plugin is available in Package Control: just run 
-"Install Package" command and install "Emmet" plugin. Please remove 
-or disable current Zen Coding plugin in order to make things work right. 
+The new plugin is available in Package Control: just run
+"Install Package" command and install "Emmet" plugin. Please remove
+or disable current Zen Coding in order to make things work right.
 
 Extensive documentation about all Emmet features is available at http://docs.emmet.io

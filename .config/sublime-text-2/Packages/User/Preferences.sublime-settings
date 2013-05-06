@@ -1,6 +1,6 @@
 {
-	"color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Eighties.tmTheme",
-	"font_face": "Droid Sans Mono",
+	"color_scheme": "Packages/User/Tomorrow-Night-Eighties.tmTheme",
+	"font_face": "Monaco",
 	"font_size": 12.0,
 	"highlight_line": true,
 	"ignored_packages":
@@ -10,11 +10,21 @@
 		"C#",
 		"Vintage",
 		"AppleScript",
+		"ZenCoding",
+		"C++",
 		"SublimeTagmatcher",
 		"ActionScript"
 	],
-	"line_padding_bottom": 2,
+	"line_padding_bottom": 3,
 	"line_padding_top": 2,
-	"theme": "Nexus.sublime-theme",
+	"phoenix_color_blue": true,
+	"phoenix_color_expanded_folder": true,
+	"phoenix_dirty_bottom_bar": true,
+	"phoenix_dirty_bottom_bar_pink": true,
+	"phoenix_eighties": true,
+	"phoenix_highlight_current_tab": true,
+	"phoenix_solid_current_tab": true,
+	"phoenix_tabs_small": true,
+	"theme": "Phoenix Dark.sublime-theme",
 	"word_wrap": true
 }
