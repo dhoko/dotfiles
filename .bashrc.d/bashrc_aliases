@@ -12,12 +12,18 @@ alias laravel='~/dev/laravel.sh'
 
 alias pi='ssh pi@192.168.0.22'
 alias wpi='ssh www-data@192.168.0.22'
+
+
 alias gis='git status'
 function commit() {
   git commit -a -m "$@"
 }
 alias gpush='git push origin '
 alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# Sublime text 2
+alias subl='sublime_text'
+
 
 
 # enable color support of ls and also add handy aliases
