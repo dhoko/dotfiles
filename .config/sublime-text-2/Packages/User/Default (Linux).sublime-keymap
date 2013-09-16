@@ -47,5 +47,9 @@
 	            [0, 1, 1, 2], [1, 1, 2, 2]
 	        ]
 	    }
+	},
+	{
+	    "keys": ["ctrl+alt+a"], "command": "align_tab",
+	    "args" : {"user_input" : ":|=>|=|,/f"}
 	}
 ]

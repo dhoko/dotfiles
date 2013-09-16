@@ -1,0 +1,13 @@
+{
+	  "show_debug"                    : false,
+	  "phpcs_command_on_save"         : false,
+	  "phpcs_commands_to_php_prefix" : ["Fixer"],
+	  "php_cs_fixer_on_save"          : false,
+	  "php_cs_fixer_show_quick_panel" : true,
+	  "php_cs_fixer_executable_path"  : "/usr/local/bin/php-cs-fixer",
+	  "php_cs_fixer_additional_args"  : {
+	      "--level"   : "psr2",
+	      "--fixers"  : "psr0"
+	  }
+
+}
