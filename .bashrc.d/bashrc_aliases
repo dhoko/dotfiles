@@ -108,3 +108,6 @@ alias phpPSR='/usr/local/bin/php-cs-fixer';
 
 # Build with PSR-2 compliance 
 alias cleanManagerPSR='phpPSR fix src/manager/ --level=psr2 --fixers=-psr0 --verbose'
+
+# flush cache
+alias cacheDrop='su -c "sync && echo 3 > /proc/sys/vm/drop_caches"'
