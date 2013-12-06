@@ -68,6 +68,9 @@ alias phpserver='php -S localhost:8000'
 #get my public IP
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
+# Get Local ip
+alias ipHome="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
