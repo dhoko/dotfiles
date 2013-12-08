@@ -117,3 +117,8 @@ alias cacheDrop='su -c "sync && echo 3 > /proc/sys/vm/drop_caches"'
 
 # Copy output
 alias copy='xclip -sel clip && echo "Copy to the clipboard"'
+
+# Install NPM and add the flag --save-dev
+function npmdev() {
+  npm install --save-dev $1
+}
