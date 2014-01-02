@@ -135,3 +135,5 @@ function dataurl() {
 # Mount my external HD
 alias icybox='su -c "mount -t ntfs-3g /dev/sdb1 /media/icybox"'
 alias icyboxout='su -c "umount -t ntfs-3g /dev/sdb1 /media/icybox"'
+
+alias nano='nano -c'
