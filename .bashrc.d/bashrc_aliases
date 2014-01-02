@@ -1,9 +1,6 @@
 alias l='ls -CF'
 alias la='ls -alF'
-alias ll='ls -lF'
-alias la='ls -alF'
-alias ll='ls -lF'
-alias l='ls -CF'
+alias ll='ls -lhF'
 alias alert_helper='history|tail -n1|sed -e "s/^\s*[0-9]\+\s*//" -e "s/;\s*alert$//"'
 alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png "[0] "'
 
@@ -137,3 +134,6 @@ alias icybox='su -c "mount -t ntfs-3g /dev/sdb1 /media/icybox"'
 alias icyboxout='su -c "umount -t ntfs-3g /dev/sdb1 /media/icybox"'
 
 alias nano='nano -c'
+
+# copy ssh key
+alias copyssh='xclip -sel clip < ~/.ssh/id_rsa.pub'
