@@ -137,3 +137,6 @@ alias nano='nano -c'
 
 # copy ssh key
 alias copyssh='xclip -sel clip < ~/.ssh/id_rsa.pub'
+
+# Display colors
+alias termcolor='printf "\e[%dm%d dark\e[0m  \e[%d;1m%d bold\e[0m\n" {30..47}{,,,} #'
