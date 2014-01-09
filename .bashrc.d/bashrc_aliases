@@ -140,3 +140,6 @@ alias copyssh='xclip -sel clip < ~/.ssh/id_rsa.pub'
 
 # Display colors
 alias termcolor='printf "\e[%dm%d dark\e[0m  \e[%d;1m%d bold\e[0m\n" {30..47}{,,,} #'
+
+# Set US international Keyboard
+alias clavier='su -c "setxkbmap us -variant intl"'
