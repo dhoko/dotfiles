@@ -152,3 +152,9 @@ function usebash() {
     sudo usermod -s /bin/bash $1
 }
 
+# Tunnel (http://sebastien.saunier.me/blog/2013/11/06/stay-safe-on-unencrypted-public-wi-fi-networks.html)
+alias tunnel='~/code/python/sshuttle/sshuttle --dns \
+              --daemon --pidfile=/tmp/sshuttle.pid --remote=elysion 0/0'
+alias tunnelx='[[ -f /tmp/sshuttle.pid ]] && kill $(cat /tmp/sshuttle.pid) && echo "disconnected"'
+
+
