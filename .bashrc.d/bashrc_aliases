@@ -143,3 +143,12 @@ alias termcolor='printf "\e[%dm%d dark\e[0m  \e[%d;1m%d bold\e[0m\n" {30..47}{,,
 
 # Set US international Keyboard
 alias clavier='su -c "setxkbmap us -variant intl"'
+
+# Backup Shaarli
+alias backupShaarli='/home/dhoko/dev/scripts/backupShaarli.sh'
+
+# Set bash
+function usebash() {
+    sudo usermod -s /bin/bash $1
+}
+
