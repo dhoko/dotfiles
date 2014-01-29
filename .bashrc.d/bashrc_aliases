@@ -158,4 +158,18 @@ alias tunnel='~/code/python/sshuttle/sshuttle --dns \
               --daemon --pidfile=/tmp/sshuttle.pid --remote=elysion 0/0'
 alias tunnelx='[[ -f /tmp/sshuttle.pid ]] && kill $(cat /tmp/sshuttle.pid) && echo "disconnected"'
 
+# Create fake files (1Mo) from an array
+function fakefiles() {
+        a=("$@")
+        ((last_idx=${#a[@]} - 1))
+        b=${a[last_idx]}
+        unset a[last_idx]
+
+        for i in "${a[@]}" ; do
+
+                 echo "Create a fake file for : " $i;
+                 dd if=/dev/zero of=$name.tar.gz bs=1k count=1024;
+        done
+}
+
 
