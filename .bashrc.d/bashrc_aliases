@@ -19,10 +19,12 @@ alias gpush='git push origin '
 alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias backToTheFuture='git reset --hard HEAD~1'
 
-alias newbranch='git checkout -b'
+alias ghb='git checkout -b'
 alias gch='git checkout'
 alias gpo='git pull origin'
 alias gmaster='git pull origin master'
+alias clone='git clone --depth 1'
+
 
 # Sublime text 2
 alias subl='sublime_text'
@@ -99,6 +101,8 @@ function extract() {
 
 alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
 alias johnny='echo "ha que coucou"'
+
+alias editsource='nano -c ~/.bashrc.d/bashrc_aliases'
 alias bashsource='source ~/.bashrc'
 
 # Convert to base 64 a file - call alias with filename
