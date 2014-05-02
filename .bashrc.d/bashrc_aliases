@@ -21,7 +21,9 @@ function commit() {
 alias gpush='git push origin '
 alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias backToTheFuture='git reset --hard HEAD~1'
-
+function glink() {
+  git commit --allow-empty -m "$@"
+}
 alias ghb='git checkout -b'
 alias gch='git checkout'
 alias gpo='git pull origin'
