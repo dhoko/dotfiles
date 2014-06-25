@@ -182,3 +182,5 @@ function fakefiles() {
 }
 
 
+# Display OS version
+alias myOS='lsb_release -a'
