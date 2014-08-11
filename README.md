@@ -9,6 +9,15 @@ Fichiers de configuration sur ma Debian
 - Configuration de Tmux
 - Script de synchronisation de laravel sur le RaspberryPi
 
+## Commandes
+
+### Réglages du son (F10-F9-F8)
+```shell
+amixer set Master 5%+
+amixer set Master 5%-
+amixer set Master toggle
+```
+
 ## Plugins pour Sublime Text 2/3
 
 - Pretty JSON [GitHub](https://github.com/dzhibas/SublimePrettyJson)
