@@ -116,6 +116,12 @@ alias to64='openssl base64 -in '
 # Build PHP project with PSR-X compliance
 alias phpPSR='/usr/local/bin/php-cs-fixer';
 
+# Clean Angular file
+function ngMin() {
+  ng-annotate -ar --single_quotes --stats $1 -o $1
+}
+
+
 # Build with PSR-2 compliance 
 alias cleanManagerPSR='phpPSR fix src/manager/ --level=psr2 --fixers=-psr0 --verbose'
 
