@@ -19,6 +19,7 @@ function commit() {
   git commit -a -m "$@"
 }
 alias gpush='git push origin '
+alias gpb='git push origin $(git rev-parse --abbrev-ref HEAD)'
 alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias backToTheFuture='git reset --hard HEAD~1'
 function glink() {
