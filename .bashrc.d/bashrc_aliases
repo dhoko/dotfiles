@@ -71,6 +71,9 @@ function server() {
 #Build in PHP server
 alias phpserver='php -S localhost:8000'
 
+#Front-server livereload cross plateform via ws://
+alias front-serve='http-server & browser-sync start  --files "**/*.html,**/*.css" --proxy="localhost:8080"'
+
 #get my public IP
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 
