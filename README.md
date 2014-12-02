@@ -8,6 +8,14 @@ Fichiers de configuration sur ma Debian
 - Configuration de SublimeText2
 - Configuration de Tmux
 - Script de synchronisation de laravel sur le RaspberryPi
+- Serveur de dev avec livereload auto
+- Edition bash
+
+## Prérequis
+
+- php (si usage de phpserver)
+- python (si usage de server)
+- node.js npm && browser-sync, http-server (si usage de front-dev)
 
 ## Commandes
 
