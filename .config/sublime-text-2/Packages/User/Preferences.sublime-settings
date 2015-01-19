@@ -2,6 +2,15 @@
 	"bold_folder_labels": true,
 	"color_scheme": "Packages/Dayle Rees Color Schemes/LastNight.tmTheme",
 	"flatland_square_tabs": true,
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		"node_modules",
+		"bower_components"
+	],
 	"font_face": "Monaco",
 	"font_size": 12.0,
 	"highlight_line": true,
