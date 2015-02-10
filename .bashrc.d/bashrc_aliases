@@ -194,3 +194,11 @@ function fakefiles() {
 
 # Display OS version
 alias myOS='lsb_release -a'
+
+# Rename files in a directory
+function mvFile() {
+  for file in $(ls);
+  do
+    mv ${file%%.*}.${file#*.} $@.${file#*.};
+  done;
+}
