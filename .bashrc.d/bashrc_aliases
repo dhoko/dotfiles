@@ -132,6 +132,9 @@ alias cleanManagerPSR='phpPSR fix src/manager/ --level=psr2 --fixers=-psr0 --ver
 # flush cache
 alias cacheDrop='su -c "sync && echo 3 > /proc/sys/vm/drop_caches"'
 
+# flush swap
+alias flush-swap="echo 'sync && swapoff -a && sync && swapon -a' | sudo /bin/bash"
+
 # Copy output
 alias copy='xclip -sel clip && echo "Copy to the clipboard"'
 
