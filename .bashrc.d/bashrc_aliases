@@ -31,7 +31,7 @@ alias gch='git checkout'
 alias gpo='git pull origin'
 alias gmaster='git pull origin master'
 alias clone='git clone --depth 1'
-
+alias grename='git commit --amend -m'
 
 # Sublime text 2
 alias subl='sublime_text'
