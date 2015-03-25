@@ -7,6 +7,8 @@ alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
 
 alias laravel='~/dev/laravel.sh'
 
+alias clock='watch -n 1 -t date'
+
 # Dodo for the eeepc
 alias dodo='sudo /etc/acpi/hibernate.sh'
 
