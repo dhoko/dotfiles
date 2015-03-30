@@ -51,5 +51,9 @@
 	{
 	    "keys": ["ctrl+alt+a"], "command": "align_tab",
 	    "args" : {"user_input" : ":|=>|=|,/f"}
+	},
+	{
+		"keys": ["f5"],
+		"command": "refresh_folder_list"
 	}
 ]
