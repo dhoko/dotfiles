@@ -206,3 +206,8 @@ function mvFile() {
     mv ${file%%.*}.${file#*.} $@.${file#*.};
   done;
 }
+
+# Start Symfony server
+function sfServer() {
+  php app/console server:run $@ && php app/console assetic:dump --watch
+}
