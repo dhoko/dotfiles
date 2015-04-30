@@ -211,3 +211,6 @@ function mvFile() {
 function sfServer() {
   php app/console server:run $@ && php app/console assetic:dump --watch
 }
+
+## Check if npm dependencies are up to date
+alias checkVersionNpm='~/pkg/node_modules/npm-check-updates/bin/npm-check-updates'
