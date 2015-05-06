@@ -214,3 +214,8 @@ function sfServer() {
 
 ## Check if npm dependencies are up to date
 alias checkVersionNpm='~/pkg/node_modules/npm-check-updates/bin/npm-check-updates'
+
+# count the occurrences of a string within a file 
+function countWordInFile() {
+  grep -o "$1" $2 | wc -l
+}
