@@ -219,3 +219,9 @@ alias checkVersionNpm='~/pkg/node_modules/npm-check-updates/bin/npm-check-update
 function countWordInFile() {
   grep -o "$1" $2 | wc -l
 }
+
+# Count lines of code for an extension in a directory
+# Thanks to @HugoGiraudel
+function countLinesCode() {
+  ( find ./ -name '*.$1' -print0 | xargs -0 cat ) | wc -l
+}
