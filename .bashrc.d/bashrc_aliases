@@ -226,3 +226,7 @@ function countWordInFile() {
 function countLinesCode() {
   ( find ./ -name '*.$1' -print0 | xargs -0 cat ) | wc -l
 }
+
+# KDE 5 reload plasma without logging out
+# from http://askubuntu.com/questions/481329/can-i-restart-the-kde-plasma-desktop-without-logging-out
+alias reloadPlasma='killall plasmashell && kstart plasmashell &'
