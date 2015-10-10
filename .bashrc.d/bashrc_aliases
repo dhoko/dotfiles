@@ -230,3 +230,6 @@ function countLinesCode() {
 # KDE 5 reload plasma without logging out
 # from http://askubuntu.com/questions/481329/can-i-restart-the-kde-plasma-desktop-without-logging-out
 alias reloadPlasma='killall plasmashell && kstart plasmashell &'
+
+# Clean GTK cache and remove database for zeitgeist (synapse)
+alias cleanGtk='echo '' > ~/.local/share/recently-used.xbel && rm ~/.local/share/zeitgeist/activity.sqlite'
