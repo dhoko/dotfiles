@@ -233,3 +233,7 @@ alias reloadPlasma='killall plasmashell && kstart plasmashell &'
 
 # Clean GTK cache and remove database for zeitgeist (synapse)
 alias cleanGtk='echo '' > ~/.local/share/recently-used.xbel && rm ~/.local/share/zeitgeist/activity.sqlite'
+
+
+# Composer - Auto cleanup the container
+alias composer='docker run --rm -v $(pwd):/app composer/composer'
