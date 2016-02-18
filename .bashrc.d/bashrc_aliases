@@ -36,6 +36,14 @@ alias clone='git clone --depth 1'
 alias grename='git commit --amend -m'
 # show latest commit for branches via http://www.alexkras.com/19-git-tips-for-everyday-use/
 alias gitHistory="git for-each-ref --sort=committerdate --format='%(refname:short) * %(authorname) * %(committerdate:relative)' refs/remotes/ | column -t -s '*'"
+
+# Get latest version of a file from da source -> usefull for a conflict into a files from a merge (weird errros)
+function remoteFileVersion() {
+  git reset HEAD $@
+  git checkout -- $@
+}
+
+
 # Sublime text 2
 alias subl='sublime_text'
 #CORS active Chromium
