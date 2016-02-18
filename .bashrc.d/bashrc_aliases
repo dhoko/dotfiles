@@ -237,3 +237,6 @@ alias cleanGtk='echo '' > ~/.local/share/recently-used.xbel && rm ~/.local/share
 
 # Composer - Auto cleanup the container
 alias composer='docker run --rm -v $(pwd):/app composer/composer'
+
+# Meteo thanks to wttr.in
+alias meteo='curl -4 wttr.in'
