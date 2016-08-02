@@ -250,3 +250,5 @@ alias composer='docker run --rm -v $(pwd):/app composer/composer'
 function meteo () {
   curl -4 wttr.in/$@
 }
+
+alias lockScreen='gnome-screensaver-command -l'
