@@ -41,3 +41,8 @@ amixer set Master toggle
 - Emmet [GitHub](https://github.com/sergeche/emmet-sublime)
 - LiveStyle [Site](http://livestyle.emmet.io/)
 - Sublime unicode nbsp [GitHub](https://github.com/possan/sublime_unicode_nbsp)
+
+
+## Setup vim
+
+- [VimBundle](https://github.com/VundleVim/Vundle.vim)
