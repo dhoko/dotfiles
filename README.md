@@ -20,6 +20,7 @@ Fichiers de configuration sur ma Debian
 - [tmux](https://github.com/tmux/tmux/wiki)
 - [TMUX plugin manager](https://github.com/tmux-plugins/tpm)
 - [Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
+- [npm-merge-driver](https://www.npmjs.com/package/npm-merge-driver)
 
 ## Commandes
 
