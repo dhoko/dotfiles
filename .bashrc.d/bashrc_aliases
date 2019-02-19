@@ -18,7 +18,7 @@ alias wpi='ssh www-data@192.168.0.22'
 
 alias gis='git status'
 function commit() {
-  git commit -a -m "$@"
+  git commit -a -S -m "$@"
 }
 alias gpush='git push origin '
 alias gpb='git push origin $(git rev-parse --abbrev-ref HEAD)'
@@ -31,21 +31,13 @@ function glink() {
 alias ghb='git checkout -b'
 alias gch='git checkout'
 alias gpo='git pull origin'
-alias gmaster='git pull origin master'
 alias clone='git clone --depth 1'
 alias grename='git commit --amend -m'
-# show latest commit for branches via http://www.alexkras.com/19-git-tips-for-everyday-use/
-alias gitHistory="git for-each-ref --sort=committerdate --format='%(refname:short) * %(authorname) * %(committerdate:relative)' refs/remotes/ | column -t -s '*'"
-
-# Get latest version of a file from da source -> usefull for a conflict into a files from a merge (weird errros)
-function remoteFileVersion() {
-  git reset HEAD $@
-  git checkout -- $@
-}
-
+alias gadd='git add $(git diff --name-only | fzf)'
 
 # Sublime text 2
 alias subl='sublime_text'
+
 #CORS active Chromium
 alias cors='/usr/lib/chromium/chromium %U --disable-web-security'
 
@@ -75,11 +67,9 @@ fi
 
 #Build a local server on :8000 to serve static file or custom port
 function server() {
-	python -m SimpleHTTPServer $@
+  python -m SimpleHTTPServer $@
 }
 
-#Build in PHP server
-alias phpserver='php -S localhost:8000'
 
 #Front-server livereload cross plateform via ws://
 alias front-serve='http-server & browser-sync start  --files "**/*.html,**/*.css,**/*.js" --proxy="localhost:8080"'
@@ -96,48 +86,36 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 # Extract archives - use: extract <file>
 # Credits to http://dotfiles.org/~pseup/.bashrc
 function extract() {
-	if [ -f $1 ] ; then
-		case $1 in
-			*.tar.bz2) tar xjf $1 ;;
-			*.tar.gz) tar xzf $1 ;;
-			*.bz2) bunzip2 $1 ;;
-			*.rar) rar x $1 ;;
-			*.gz) gunzip $1 ;;
-			*.tar) tar xf $1 ;;
-			*.tbz2) tar xjf $1 ;;
-			*.tgz) tar xzf $1 ;;
-			*.zip) unzip $1 ;;
-			*.Z) uncompress $1 ;;
-			*.7z) 7z x $1 ;;
-			*.xz) unxz -k $1;;
-			*) echo "'$1' cannot be extracted via extract()" ;;
-		esac
-	else
-		echo "'$1' is not a valid file"
-	fi
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2) tar xjf $1 ;;
+      *.tar.gz) tar xzf $1 ;;
+      *.bz2) bunzip2 $1 ;;
+      *.rar) rar x $1 ;;
+      *.gz) gunzip $1 ;;
+      *.tar) tar xf $1 ;;
+      *.tbz2) tar xjf $1 ;;
+      *.tgz) tar xzf $1 ;;
+      *.zip) unzip $1 ;;
+      *.Z) uncompress $1 ;;
+      *.7z) 7z x $1 ;;
+      *.xz) unxz -k $1;;
+      *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
 }
 
 
 alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
 alias johnny='echo "ha que coucou"'
 
-alias editsource='nano -c ~/.bashrc.d/bashrc_aliases'
+alias editsource='vim ~/.bashrc.d/bashrc_aliases'
 alias bashsource='source ~/.bashrc'
 
 # Convert to base 64 a file - call alias with filename
 alias to64='openssl base64 -in '
-
-# Build PHP project with PSR-X compliance
-alias phpPSR='/usr/local/bin/php-cs-fixer';
-
-# Clean Angular file
-function ngMin() {
-  ng-annotate -ar --single_quotes --stats $1 -o $1
-}
-
-
-# Build with PSR-2 compliance 
-alias cleanManagerPSR='phpPSR fix src/manager/ --level=psr2 --fixers=-psr0 --verbose'
 
 # flush cache
 alias cacheDrop='su -c "sync && echo 3 > /proc/sys/vm/drop_caches"'
@@ -148,10 +126,6 @@ alias flush-swap="echo 'sync && swapoff -a && sync && swapon -a' | sudo /bin/bas
 # Copy output
 alias copy='xclip -sel clip && echo "Copy to the clipboard"'
 
-# Install NPM and add the flag --save-dev
-function npmdev() {
-  npm install --save-dev $1
-}
 
 # Create a data URL from a file
 function dataurl() {
@@ -186,22 +160,21 @@ function usebash() {
 }
 
 # Tunnel (http://sebastien.saunier.me/blog/2013/11/06/stay-safe-on-unencrypted-public-wi-fi-networks.html)
-alias tunnel='~/code/python/sshuttle/sshuttle --dns \
+alias tunnel='~/vpn/sshuttle/sshuttle --dns \
               --daemon --pidfile=/tmp/sshuttle.pid --remote=elysion 0/0'
 alias tunnelx='[[ -f /tmp/sshuttle.pid ]] && kill $(cat /tmp/sshuttle.pid) && echo "disconnected"'
 
 # Create fake files (1Mo) from an array
 function fakefiles() {
-        a=("$@")
-        ((last_idx=${#a[@]} - 1))
-        b=${a[last_idx]}
-        unset a[last_idx]
+  a=("$@")
+  ((last_idx=${#a[@]} - 1))
+  b=${a[last_idx]}
+  unset a[last_idx]
 
-        for i in "${a[@]}" ; do
-
-                 echo "Create a fake file for : " $i;
-                 dd if=/dev/zero of=$name.tar.gz bs=1k count=1024;
-        done
+  for i in "${a[@]}" ; do
+    echo "Create a fake file for : " $i;
+    dd if=/dev/zero of=$name.tar.gz bs=1k count=1024;
+  done
 }
 
 
@@ -221,10 +194,7 @@ function sfServer() {
   php app/console server:run $@ && php app/console assetic:dump --watch
 }
 
-## Check if npm dependencies are up to date
-alias checkVersionNpm='~/pkg/node_modules/npm-check-updates/bin/npm-check-updates'
-
-# count the occurrences of a string within a file 
+# count the occurrences of a string within a file
 function countWordInFile() {
   grep -o "$1" $2 | wc -l
 }
@@ -239,16 +209,18 @@ function countLinesCode() {
 # from http://askubuntu.com/questions/481329/can-i-restart-the-kde-plasma-desktop-without-logging-out
 alias reloadPlasma='killall plasmashell && kstart plasmashell &'
 
+
 # Clean GTK cache and remove database for zeitgeist (synapse)
 alias cleanGtk='echo '' > ~/.local/share/recently-used.xbel && rm ~/.local/share/zeitgeist/activity.sqlite'
 
-
-# Composer - Auto cleanup the container
-alias composer='docker run --rm -v $(pwd):/app composer/composer'
-
-# Meteo thanks to wttr.in => meteo grenoble
-function meteo () {
+function meteo  () {
   curl -4 wttr.in/$@
 }
 
-alias lockScreen='gnome-screensaver-command -l'
+alias killGnome='killall -3 gnome-shell'
+alias reloadGnome='gnome-shell --replace'
+alias forceReload='gnome-session-quit --no-prompt'
+
+alias sortSize='find . -exec exiftool -S -t -q -Directory -FileName -FileSize -ImageSize  {} + | sort -k2n,2'
+
+alias dnsEnForce='sudo sh -c "echo nameserver 9.9.9.9 > /etc/resolv.conf"';

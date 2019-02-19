@@ -1,0 +1,12 @@
+#!/bin/bash
+set -eo pipefail
+
+FILENAME=$(basename -- "$1");
+EXT="${FILENAME##*.}";
+NAME="${FILENAME%.*}";
+OUTPUT=$(echo "$NAME-2.$EXT");
+
+echo $FILENAME;
+echo $OUTPUT;
+
+ffmpeg -i "$FILENAME" -filter:v scale=1280:-2 -c:a copy "$OUTPUT";

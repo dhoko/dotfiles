@@ -2,7 +2,7 @@
 NoColor="\033[0m"
 Cyan="\033[0;36m"
 Green="\033[0;32m"
-Red="\033[0;31m" 
+Red="\033[0;31m"
 Yellow="\033[0;33m"
 
 # Chars
@@ -43,7 +43,7 @@ prompt() {
     PS1=$LEFTPROMPT"\[$NoColor\] \n"$RootPrompt" "
   fi
 
-  # echo -e -n $LEFTPROMPT  
+  # echo -e -n $LEFTPROMPT
 }
 
 # Define PROMPT_COMMAND if not already defined (fix: Modifying title on SSH connections)
@@ -57,10 +57,10 @@ if [ -z "$PROMPT_COMMAND" ]; then
   ;;
   esac
 fi
- 
+
 # Main prompt
 PROMPT_COMMAND="prompt;$PROMPT_COMMAND"
- 
+
 if [ $EUID -ne 0 ]; then
   PS1=$NonRootPrompt" "
 else

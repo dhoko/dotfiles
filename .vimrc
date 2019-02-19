@@ -46,3 +46,6 @@ set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
+
+" cf https://twitter.com/_ericelliott/status/1096558136117194752?s=03
+set mouse=a

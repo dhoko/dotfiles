@@ -20,7 +20,7 @@ fi
 echo "Téléchargement de la config Shaarli..."
 echo
 
-if ! scp -r www-data@elysion:colibri-libre.org/liens/data/ $BACKUPDIR ; then
+if ! scp -r hypnos@elysion:/var/www/dhoko.me/liens/data/ $BACKUPDIR ; then
     echo -e "\e[00;41mERROR\e[00m Fuuuuu";
     exit $?
 fi

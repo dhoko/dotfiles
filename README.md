@@ -13,9 +13,13 @@ Fichiers de configuration sur ma Debian
 
 ## Prérequis
 
-- php (si usage de phpserver)
 - python (si usage de server)
 - node.js npm && browser-sync, http-server (si usage de front-dev)
+- [z](https://github.com/rupa/z) (~/scripts/z.sh)
+- [fzf](https://github.com/junegunn/fzf)
+- [tmux](https://github.com/tmux/tmux/wiki)
+- [TMUX plugin manager](https://github.com/tmux-plugins/tpm)
+- [Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)
 
 ## Commandes
 

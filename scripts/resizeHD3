@@ -1,0 +1,16 @@
+#!/bin/bash
+set -eo pipefail
+
+FILENAME=$(basename -- "$1");
+EXT="${FILENAME##*.}";
+NAME="${FILENAME%.*}";
+OUTPUT=$(echo "$NAME-2.$EXT");
+
+echo $FILENAME;
+echo $OUTPUT;
+
+if [[ "$EXT" = "wmv" ]]; then
+    ffmpeg -i "$FILENAME" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "$NAME.mp4";
+else
+    ffmpeg -i "$FILENAME" -filter:v scale=1280:-1 -c:a copy "$OUTPUT";
+fi
