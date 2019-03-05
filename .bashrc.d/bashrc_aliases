@@ -34,6 +34,7 @@ alias gpo='git pull origin'
 alias clone='git clone --depth 1'
 alias grename='git commit --amend -m'
 alias gadd='git add $(git diff --name-only | fzf)'
+alias gcleanstate='gch $(git diff --name-only | fzf)'
 
 # Sublime text 2
 alias subl='sublime_text'
