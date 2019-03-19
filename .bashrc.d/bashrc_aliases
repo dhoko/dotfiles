@@ -225,3 +225,7 @@ alias forceReload='gnome-session-quit --no-prompt'
 alias sortSize='find . -exec exiftool -S -t -q -Directory -FileName -FileSize -ImageSize  {} + | sort -k2n,2'
 
 alias dnsEnForce='sudo sh -c "echo nameserver 9.9.9.9 > /etc/resolv.conf"';
+
+function deploy() {
+  npm run deploy -- --branch="deploy-$1" --api="${2:-build}"
+}
