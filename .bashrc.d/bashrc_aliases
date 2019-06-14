@@ -33,8 +33,9 @@ alias gch='git checkout'
 alias gpo='git pull origin'
 alias clone='git clone --depth 1'
 alias grename='git commit --amend -m'
-alias gadd='git add $(git diff --name-only | fzf)'
-alias gcleanstate='gch $(git diff --name-only | fzf)'
+alias gadd='git add $(git diff --name-only | uniq | fzf)'
+alias gcleanstate='gch $(git diff --name-only | uniq | fzf)'
+alias editis='vim $(git diff --name-only | uniq | fzf)'
 alias gcb='git checkout $(git branch | fzf)'
 
 # Sublime text 2
@@ -71,6 +72,7 @@ fi
 function server() {
   python -m SimpleHTTPServer $@
 }
+alias appComponent='/home/dhoko/dev/taf/AppGenerator/index.js'
 
 
 #Front-server livereload cross plateform via ws://
@@ -227,6 +229,21 @@ alias sortSize='find . -exec exiftool -S -t -q -Directory -FileName -FileSize -I
 
 alias dnsEnForce='sudo sh -c "echo nameserver 9.9.9.9 > /etc/resolv.conf"';
 
+
 function deploy() {
-  npm run deploy -- --branch="deploy-$1" --api="${2:-build}"
+  local branch="${2:-$(git --no-pager branch -r --list '*deploy-*' -vv --sort=-committerdate  --format='%(refname:lstrip=3)
+    Date: %(committerdate:relative) (%(committerdate:short))
+    From: %(authorname)
+    Commit: %(contents:subject)
+    Description: %(contents:body)' | fzf -e | xargs)}";
+
+  if [[ "$branch" != deploy-*  ]]; then
+    echo "👊 The branch must be deploy-<target>";
+  else
+    npm run deploy -- --branch="$branch" --api="${1:-build}"
+  fi;
+}
+
+function version() {
+ cat node_modules/$1/package.json | grep \"version\": | awk -F : '{print $2}'
 }
