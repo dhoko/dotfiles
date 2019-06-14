@@ -231,11 +231,11 @@ alias dnsEnForce='sudo sh -c "echo nameserver 9.9.9.9 > /etc/resolv.conf"';
 
 
 function deploy() {
-  local branch="${2:-$(git --no-pager branch -r --list '*deploy-*' -vv --sort=-committerdate  --format='%(refname:lstrip=3)
+  local branch="${2:-$(git --no-pager branch -r --list '*deploy-*' -vv --sort=committerdate  --format='%(refname:lstrip=3)
     Date: %(committerdate:relative) (%(committerdate:short))
     From: %(authorname)
     Commit: %(contents:subject)
-    Description: %(contents:body)' | fzf -e | xargs)}";
+    Description: %(contents:body)' | fzf --tac -e | xargs)}";
 
   if [[ "$branch" != deploy-*  ]]; then
     echo "👊 The branch must be deploy-<target>";
