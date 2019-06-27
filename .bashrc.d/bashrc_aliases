@@ -38,6 +38,11 @@ alias gcleanstate='gch $(git diff --name-only | uniq | fzf)'
 alias editis='vim $(git diff --name-only | uniq | fzf)'
 alias gcb='git checkout $(git branch | fzf)'
 
+function rebase() {
+  git fetch;
+  git rebase "${1:-$(git branch -r | fzf | xargs)}";
+}
+
 # Sublime text 2
 alias subl='sublime_text'
 
