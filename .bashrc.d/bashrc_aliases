@@ -252,3 +252,12 @@ function deploy() {
 function version() {
  cat node_modules/$1/package.json | grep \"version\": | awk -F : '{print $2}'
 }
+
+function rebase() {
+  git fetch;
+  git rebase "${1:-$(git branch -r | fzf | xargs)}";
+}
+
+function tardiff() {
+    git archive -o latest.tar "$(git rev-parse HEAD)" $(git diff --name-only "$(git log --pretty=format:'%H' -n 1 -2 | tail -1)" "$(git rev-parse HEAD)"); 
+}
