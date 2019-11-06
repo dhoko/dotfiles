@@ -245,7 +245,7 @@ function deploy() {
 }
 
 function version() {
- cat node_modules/$(ls node_modules | fzf)/package.json | awk 'match($0, /"version": "([0-9]+\.[0-9]+\.[0-9]+)"/, arr) { print arr[1]; }'
+ cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | awk 'match($0, /"version": "([0-9]+\.[0-9]+\.[0-9]+)"/, arr) { print arr[1]; }'
 }
 
 function rebase() {
