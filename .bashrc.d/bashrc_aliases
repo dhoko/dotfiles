@@ -38,11 +38,6 @@ alias gcleanstate='gch $(git diff --name-only | uniq | fzf -m)'
 alias editis='vim $(git diff --name-only | uniq | fzf)'
 alias gcb='git checkout $(git branch | fzf)'
 
-function rebase() {
-  git fetch;
-  git rebase "${1:-$(git branch -r | fzf | xargs)}";
-}
-
 # Sublime text 2
 alias subl='sublime_text'
 
@@ -245,12 +240,12 @@ function deploy() {
   if [[ "$branch" != deploy-*  ]]; then
     echo "👊 The branch must be deploy-<target>";
   else
-    npm run deploy -- --branch="$branch" --api="${1:-build}"
+    npm run deploy -- --branch="$branch" --api="${1:-build}" $3
   fi;
 }
 
 function version() {
- cat node_modules/$1/package.json | grep \"version\": | awk -F : '{print $2}'
+ cat node_modules/$(ls node_modules | fzf)/package.json | awk 'match($0, /"version": "([0-9]+\.[0-9]+\.[0-9]+)"/, arr) { print arr[1]; }'
 }
 
 function rebase() {
