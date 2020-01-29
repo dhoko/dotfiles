@@ -70,6 +70,8 @@ fi
 
 #Build a local server on :8000 to serve static file or custom port
 function server() {
+  local ipLocale="$(ip a | grep -oE '192\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)";
+  echo "${ipLocale}:${1:-8000}";
   python -m SimpleHTTPServer $@
 }
 alias appComponent='/home/dhoko/dev/taf/AppGenerator/index.js'
