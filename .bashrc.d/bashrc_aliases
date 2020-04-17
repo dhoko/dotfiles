@@ -258,3 +258,7 @@ function rebase() {
 function tardiff() {
     git archive -o latest.tar "$(git rev-parse HEAD)" $(git diff --name-only "$(git log --pretty=format:'%H' -n 1 -2 | tail -1)" "$(git rev-parse HEAD)"); 
 }
+
+function zz {
+   cd "$(z | fzf | awk '{print $2}')"
+}
