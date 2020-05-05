@@ -262,3 +262,20 @@ function tardiff() {
 function zz {
    cd "$(z | fzf | awk '{print $2}')"
 }
+
+function amend {
+    git commit -a --amend --no-edit && gpb -f
+}
+
+
+function ghash {
+    git log --format='%H' $@
+}
+
+function fingerprintSSH {
+    for file in *.pub; do echo "[$file]: $(ssh-keygen -l -E md5  -f "$file")"; done
+}
+~                                                                                                    
+~                                                                                                    
+~                                                                                                    
+
