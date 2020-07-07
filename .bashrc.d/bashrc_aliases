@@ -275,7 +275,25 @@ function ghash {
 function fingerprintSSH {
     for file in *.pub; do echo "[$file]: $(ssh-keygen -l -E md5  -f "$file")"; done
 }
-~                                                                                                    
-~                                                                                                    
-~                                                                                                    
+
+##
+# Open a file from a project inside inside vim
+# Args 1 : string directory to filter ex: op jobs will look for files inside jobs
+op() {
+  local dir=".";
+
+  if [ -n "$1" ]; then
+      dir="$1/.";
+  fi
+
+  local file="$(find "$dir" -type f -not -path '*node_modules*' -and -not -path '*.git/*' -and -not -path './image/__*' | fzf -m)";
+
+  if [ -z "$file" ]; then
+      echo 'you did not select a single file';
+      return 1;
+  fi
+
+  vim "$file"
+}
+                                                                                           
 
