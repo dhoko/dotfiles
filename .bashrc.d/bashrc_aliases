@@ -246,9 +246,21 @@ function deploy() {
   fi;
 }
 
+#function version() {
+# cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | jq .version
+#}
+
 function version() {
- cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | jq .version
+  local dep="${1:-$(ls node_modules | fzf)}";
+  local hash="$(jq -r ".dependencies.\"$dep\".version" package-lock.json | awk -F "#" '{print $2}')";
+  local version="$(jq -r .version "node_modules/$dep/package.json")";
+
+  echo "[version]: $version"
+  if [ -n "$hash" ]; then
+    echo "[hash]: $hash"
+  fi;
 }
+
 
 function rebase() {
   git fetch;
@@ -297,3 +309,36 @@ op() {
 }
                                                                                            
 
+treesize() {
+  du -k -d 1 | sort -nr | awk '
+     BEGIN {
+        split("KB,MB,GB,TB", Units, ",");
+     }
+     {
+        u = 1;
+        while ($1 >= 1024) {
+           $1 = $1 / 1024;
+           u += 1
+        }
+        $1 = sprintf("%.1f %s", $1, Units[u]);
+        print $0;
+     }
+    '
+}
+
+v() {
+
+  local dir=".";
+
+   if [ -n "$1" ]; then
+     dir="$1/.";
+   fi
+
+   find "$dir" \
+     -type f \
+     -not -path '*node_modules*' \
+     -not -path '*.parcel-cache*' \
+     -and -not -path '*.git/*' \
+     -and -not -path './image/__*' \
+     | fzf --preview 'bat {-1} --color=always'
+}
