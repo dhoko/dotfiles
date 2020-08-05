@@ -326,19 +326,52 @@ treesize() {
     '
 }
 
-v() {
+e() {
 
   local dir=".";
+  local bin="nvim";
 
-   if [ -n "$1" ]; then
+   if [[ "$*" =~ '-b' ]]; then
+     bin='bat';
+   fi
+
+   if [[ "$*" =~ '-r' ]]; then
+     bin='cat';
+   fi
+
+   if [[ "$*" =~ '-p' ]]; then
+     bin='echo';
+   fi
+
+   if [ -n "$1" ] && ! [[ "$1" =~ ^- ]]; then
      dir="$1/.";
    fi
 
-   find "$dir" \
+   local filePath="$(find "$dir" \
      -type f \
      -not -path '*node_modules*' \
      -not -path '*.parcel-cache*' \
      -and -not -path '*.git/*' \
      -and -not -path './image/__*' \
-     | fzf --preview 'bat {-1} --color=always'
+     | fzf --preview 'bat {-1} --color=always')";
+
+   if [ -z "$filePath" ]; then
+     return 0;
+   fi;
+
+   "$bin" "$filePath"
 }
+
+# see files inside git status
+vc() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+
+# copy last command
+clast() {
+  local cmd="$(fc -ln -1 | awk '{$1=$1}1')";
+  echo "$cmd" | copy > /dev/null;
+  echo "$cmd"
+}
+
