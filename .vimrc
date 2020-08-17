@@ -10,6 +10,7 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'mhartington/oceanic-next'
+Plugin 'isRuslan/vim-es6'
 
 
 " All of your Plugins must be added before the following line
@@ -31,21 +32,25 @@ filetype plugin indent on    " required
 " " Theme
  syntax enable
 " for vim 7
- set t_Co=256
+" set t_Co=256
 
 " for vim 8
- if (has("termguicolors"))
-  set termguicolors
- endif
+if (has("termguicolors"))
+ set termguicolors
+endif
+
 
 colorscheme OceanicNext
 
+"It should remove trailing spaces
+"from https://unix.stackexchange.com/questions/75430/how-to-automatically-strip-trailing-spaces-on-save-in-vi-and-vim/75431#75431
+autocmd BufWritePre * :%s/\s\+$//e
 
-syntax enable
+
 set smartindent
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
-
-" cf https://twitter.com/_ericelliott/status/1096558136117194752?s=03
+set number
+set relativenumber
 set mouse=a
