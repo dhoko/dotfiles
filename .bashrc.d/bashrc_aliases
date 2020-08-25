@@ -330,24 +330,33 @@ e() {
 
   local dir=".";
   local bin="nvim";
+  local level="4";
 
-   if [[ "$*" =~ '-b' ]]; then
-     bin='bat';
-   fi
+  for option in "$@"; do
+    case "$option" in
+      -L=*)
+        level="${option#*=}"
+      ;;
+      -b)
+        bin='bat'
+      ;;
+      -r)
+        bin='cat'
+      ;;
+      -p)
+        bin='echo'
+      ;;
+      *)
+        if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
+          dir="${option}/.";
+        fi
+      ;;
+     esac
+    shift
+  done
 
-   if [[ "$*" =~ '-r' ]]; then
-     bin='cat';
-   fi
-
-   if [[ "$*" =~ '-p' ]]; then
-     bin='echo';
-   fi
-
-   if [ -n "$1" ] && ! [[ "$1" =~ ^- ]]; then
-     dir="$1/.";
-   fi
-
-   local filePath="$(find "$dir" \
+  local filePath="$(find "$dir" \
+     -maxdepth "$level" \
      -type f \
      -not -path '*node_modules*' \
      -not -path '*.parcel-cache*' \
@@ -360,6 +369,18 @@ e() {
    fi;
 
    "$bin" "$filePath"
+}
+
+v(){
+  e "$@" -b
+}
+
+vr(){
+  e "$@" -r
+}
+
+vp(){
+  e "$@" -p
 }
 
 # see files inside git status
