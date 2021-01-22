@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+findCode() {
+  FZF_DEFAULT_COMMAND="rg -l '$1'" \
+    fzf --sort --preview="[[ ! -z {} ]] && rg -C3 -p {q} {}"  \
+    --phony -q "$1" \
+    --bind "change:reload:rg -l {q}" \
+    --preview-window="70%:wrap"
+  }
+
+file="$(findCode "$@")";
+
+if [ -n "$file" ]; then
+  nvim "$file";
+fi
