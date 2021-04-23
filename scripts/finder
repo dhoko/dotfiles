@@ -1,15 +1,47 @@
 #!/usr/bin/env bash
 
+
 findCode() {
-  FZF_DEFAULT_COMMAND="rg -l '$1'" \
-    fzf --sort --preview="[[ ! -z {} ]] && rg -C3 -p {q} {}"  \
-    --phony -q "$1" \
-    --bind "change:reload:rg -l {q}" \
-    --preview-window="70%:wrap"
+  FZF_DEFAULT_COMMAND="rg -l '$1' -g '!hidden-*'" \
+    fzf \
+      --sort \
+      --preview="[[ ! -z {} ]] && rg -C3 -p {q} -g '!hidden-*' {}"  \
+      --phony -q "$1" \
+      --bind "change:reload:rg -l {q} -g '!hidden-*'" \
+      --preview-window="70%:wrap" \
+      --print-query
   }
 
 file="$(findCode "$@")";
 
 if [ -n "$file" ]; then
-  nvim "$file";
+  query="$(head -1 <<< "$file")";
+  filePath="$(tail -1 <<< "$file")";
+
+
+  cat <<EOT
+DEBUG:
+  search: [${file}]
+  - query: ${query}
+  - filepath: ${filePath}
+EOT
+
+  output="$(rg --column  "$query" "$filePath" -g '!hidden-*')"
+
+  if [ "$(wc -l <<< "$output")" -gt 1 ]; then
+    #output="$(echo "$output" | fzf --reverse)";
+    getLineNumber="echo {} | cut -d':' -f1 | head -1"
+    focusLine="$getLineNumber | xargs -I % sh -c 'bat --color=always  -H % ${filePath}'"
+
+    output="$( echo "$output" | fzf \
+      --no-sort \
+      --reverse \
+      --tiebreak=index \
+      --no-multi \
+      --ansi \
+      --preview="$focusLine" )"
+
+  fi
+
+  nvim +"$(awk -F ':' '{print $1}' <<< "$output")" "$filePath"
 fi
