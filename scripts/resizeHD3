@@ -1,16 +1,63 @@
 #!/bin/bash
 set -eo pipefail
 
-FILENAME=$(basename -- "$1");
+getFilePath() {
+
+  if [ -n "$1" ]; then
+    echo "$1";
+    return 0;
+  fi;
+
+  ls -lSh {*,**/*} \
+    | grep -v '\-2.mp4' \
+    | grep -v -E '\.(rar|zip)$' \
+    | uniq \
+    | head -10 \
+    | fzf \
+    | awk '{ for(i=0;i++<8;){$i=""}; print $0 }' \
+    | xargs;
+  return 0;
+}
+
+FILENAME_PATH="$(getFilePath "$1")";
+echo "---"
+
+FILENAME=$(basename -- "$FILENAME_PATH");
 EXT="${FILENAME##*.}";
 NAME="${FILENAME%.*}";
-OUTPUT=$(echo "$NAME-2.$EXT");
+OUTPUT="${FILENAME_PATH/.$EXT/-2.$EXT}";
 
-echo $FILENAME;
-echo $OUTPUT;
+if [ -z "$FILENAME" ]; then
+   echo  '[info] no filename';
+   exit 0;
+fi
+
+echo "[FILENAME_PATH]: $FILENAME_PATH";
+echo "[OUTPUT]: $OUTPUT";
 
 if [[ "$EXT" = "wmv" ]]; then
-    ffmpeg -i "$FILENAME" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "$NAME.mp4";
+    ffmpeg -i "$FILENAME_PATH" -s hd720 -c:v libx264 -crf 23 -c:a aac -strict -2 "${OUTPUT/.wmv/.mp4}";
 else
-    ffmpeg -i "$FILENAME" -filter:v scale=1280:-1 -c:a copy "$OUTPUT";
+    # ffmpeg -i "$FILENAME" -filter:v -c:v libx265 scale=1280:-1 -c:a copy "$OUTPUT";
+
+    #ffmpeg -i "$FILENAME" -c:v libx265  -filter:v scale=1280:-1 -c:a copy "$OUTPUT"
+
+     ffmpeg -i "$FILENAME_PATH" -filter:v scale=1280:-1 -c:a copy "$OUTPUT";
 fi
+
+echo "[done] $FILENAME_PATH"
+
+removeFile=false;
+
+read -p 'Do you want to remove this file ? ' -n 1 -r;
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    allowCommit=true;
+fi
+
+
+if $allowCommit; then
+    rm "$FILENAME_PATH"
+    echo "[success] resize + remove $FILENAME_PATH";
+fi;
