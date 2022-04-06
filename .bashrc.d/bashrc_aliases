@@ -396,3 +396,7 @@ clast() {
   echo "$cmd"
 }
 
+protonvpn-get-user() {
+  #https://github.com/jaraco/keyring 
+  keyring get ProtonVPN ProtonUser
+}
