@@ -43,5 +43,7 @@ EOT
 
   fi
 
-  nvim +"$(awk -F ':' '{print $1}' <<< "$output")" "$filePath"
+
+  # /home/dhoko/dev/utils/nvim.appimage +"$(awk -F ':' '{print $1}' <<< "$output")" "$filePath"
+  hx "$filePath:$(awk -F ':' '{print $1}' <<< "$output")"
 fi
