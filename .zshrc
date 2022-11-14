@@ -8,7 +8,7 @@ export ZSH="/home/dhoko/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="atlas"
+ZSH_THEME="risto"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -98,19 +98,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-
-# Import old bash aliases
+#
+# Global aliases
 if [ -r ~/.bashrc.d/bashrc_aliases ]; then
   source ~/.bashrc.d/bashrc_aliases
 fi
 
-export NVM_DIR=~/.nvm
-source ~/.nvm/nvm.sh
-export GPG_TTY=$(tty)
 export GPG_TTY=$(tty)
 . /home/dhoko/dev/utils/z.sh
 
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias appComponent='/home/dhoko/dev/taf/AppGenerator/index.js'
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 export VISUAL=vim
@@ -118,3 +116,38 @@ export EDITOR="$VISUAL"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export NVM_DIR="$HOME/.nvm"
+# This lazy loads nvm
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use # This loads nvm
+  nvm $@
+}
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH="$HOME/.local/bin:$PATH"
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/dhoko/dev/kube/google-cloud-sdk/path.zsh.inc' ]; then . '/home/dhoko/dev/kube/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/home/dhoko/dev/kube/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/dhoko/dev/kube/google-cloud-sdk/completion.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv virtualenv-init -)"
+
+kubectl() {
+  unset -f kubectl
+  [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
+  kubectl $@
+}
+
+# [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
+
+export TERM=xterm-256color
+
+# default golang install dir
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
