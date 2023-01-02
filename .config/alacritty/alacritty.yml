@@ -1,0 +1,53 @@
+live_config_reload: true
+font:
+  size: 14.0
+
+window:
+  dimensions:
+    columns: 120
+  padding:
+    y: 5
+    x: 5
+
+colors:
+  primary:
+    background: '#13222e'
+    foreground: '#96a8b5'
+
+  cursor:
+    text: '#13222e'
+    cursor: '#9770b2'
+
+  selection:
+    text: '#13222e'
+    background: '#4496cd'
+
+  normal:
+    black: '#3f4f5b'
+    red: '#ca3e5a'
+    green: '#81a559'
+    yellow: '#ebb062'
+    blue: '#4496cd'
+    magenta: '#b35d8d'
+    cyan: '#42abab'
+    white: '#96a8b5'
+
+  bright:
+    black: '#556572'
+    red: '#C45871'
+    green: '#8AAA70'
+    yellow: '#DEB377'
+    blue: '#599ECD'
+    magenta: '#B2709A'
+    cyan: '#57AFB2'
+    white: '#acbecc'
+
+  dim:
+    black: '#293845'
+    red: '#A53851'
+    green: '#6B8B50'
+    yellow: '#C09458'
+    blue: '#3A7FAD'
+    magenta: '#93517A'
+    cyan: '#399092'
+    white: '#80919f'
