@@ -2,3 +2,5 @@ theme = "onedark"
 
 [editor]
 line-number = "relative"
+# Ignore git diff inside sidebar
+gutters = ["diagnostics", "spacer", "line-numbers"]

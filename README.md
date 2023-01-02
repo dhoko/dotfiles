@@ -1,6 +1,28 @@
 dotfiles
 ========
 
+## 2023
+
+- Add Helix editor config
+- Add Alacritty config
+- Add npmrc config
+- Add oh my zsh config
+
+UI: (_xfce4_)
+  - Theme: Arc-Dark
+  - Icons: Maia
+  - Font: Noto sans regular 15
+  - Default monospace: Monospace Regular 15
+  - Rendering: 
+    - [x] Enable anti-aliasing
+    - Hinting: Slight
+    - sub-pixel order: RGB
+  - DPI: 96
+
+
+
+## Pre 2023
+
 Fichiers de configuration sur ma Debian
 
 - Configuration du terminal
