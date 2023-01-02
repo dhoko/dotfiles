@@ -5,7 +5,7 @@ alias lt='ls -lht --color=auto'
 alias alert_helper='history|tail -n1|sed -e "s/^\s*[0-9]\+\s*//" -e "s/;\s*alert$//"'
 alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png "[0] "'
 
-alias laravel='~/dev/laravel.sh'
+alias dnode="npx nodemon --inspect-brk"
 
 alias clock='watch -n 1 -t date'
 
@@ -38,8 +38,34 @@ alias gcleanstate='gch $(git diff --name-only | uniq | fzf -m)'
 alias editis='vim $(git diff --name-only | uniq | fzf)'
 alias gcb='git checkout $(git branch | fzf)'
 
-# Sublime text 2
-alias subl='sublime_text'
+
+function rebase() {
+  git fetch;
+  git rebase "${1:-$(git branch -r | fzf | xargs)}";
+}
+
+function amend {
+    git commit -a --amend --no-edit $* && gpb -f
+}
+
+
+function ghash {
+    git log --format='%H' $@
+}
+
+function gpmr {
+  local branch="$(git rev-parse --abbrev-ref HEAD)";
+  local opt="-o merge_request.create -o merge_request.target=$branch -o merge_request.remove_source_branch";
+
+  git push origin "$branch" $opt
+}
+
+function pullswitch() {
+  BRANCH="$1"
+  git fetch origin "$BRANCH:$BRANCH"
+  gch "$BRANCH"
+}
+
 
 #CORS active Chromium
 alias cors='/usr/lib/chromium/chromium %U --disable-web-security'
@@ -73,9 +99,8 @@ function server() {
   local ipLocale="$(ip a | grep -oE '192\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)";
   echo "${ipLocale}:${1:-8000}";
   python -m SimpleHTTPServer $@
-}
-alias appComponent='/home/dhoko/dev/taf/AppGenerator/index.js'
 
+}
 
 #Front-server livereload cross plateform via ws://
 alias front-serve='http-server & browser-sync start  --files "**/*.html,**/*.css,**/*.js" --proxy="localhost:8080"'
@@ -117,7 +142,7 @@ function extract() {
 alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
 alias johnny='echo "ha que coucou"'
 
-alias editsource='vim ~/.bashrc.d/bashrc_aliases'
+alias editsource='nvim ~/.bashrc.d/bashrc_aliases'
 alias bashsource='source ~/.bashrc'
 
 # Convert to base 64 a file - call alias with filename
@@ -208,7 +233,7 @@ function countWordInFile() {
 # Count lines of code for an extension in a directory
 # Thanks to @HugoGiraudel
 function countLinesCode() {
-  ( find ./ -name '*.$1' -print0 | xargs -0 cat ) | wc -l
+  ( find ./ -type f -name "*.$1" -print0 | xargs -0 cat ) | wc -l
 }
 
 # KDE 5 reload plasma without logging out
@@ -246,51 +271,41 @@ function deploy() {
   fi;
 }
 
-#function version() {
-# cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | jq .version
-#}
-
 function version() {
-  local dep="${1:-$(ls node_modules | fzf)}";
-  local hash="$(jq -r ".dependencies.\"$dep\".version" package-lock.json | awk -F "#" '{print $2}')";
-  local version="$(jq -r .version "node_modules/$dep/package.json")";
-
-  echo "[version]: $version"
-  if [ -n "$hash" ]; then
-    echo "[hash]: $hash"
-  fi;
-}
-
-
-function rebase() {
-  git fetch;
-  git rebase "${1:-$(git branch -r | fzf | xargs)}";
+ cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | jq .version
 }
 
 function tardiff() {
-    git archive -o latest.tar "$(git rev-parse HEAD)" $(git diff --name-only "$(git log --pretty=format:'%H' -n 1 -2 | tail -1)" "$(git rev-parse HEAD)"); 
+    git archive -o latest.tar "$(git rev-parse HEAD)" $(git diff --name-only "$(git log --pretty=format:'%H' -n 1 -2 | tail -1)" "$(git rev-parse HEAD)");
 }
+
+function versionInstalled() {
+
+  if ! [ -d "node_modules/$1" ]; then
+    return 0;
+  fi;
+  # Compat MacOS without gawk -> that's why we use sed too :/
+  local version="$(cat "node_modules/$1/package.json" | awk '/"_resolved": "(.+)"/{print $2}' | sed 's/"//g;s/,//g')";
+  printf '%-20s' "[$1]" "$version";
+  echo
+
+  if [ -n "$2" ]; then
+    local tag="$(cat "node_modules/$1/package.json" | awk '/"version": "(.+)"/{print $2}' | sed 's/"//g;s/,//g';)";
+    printf '%-20s' "[$1]" "$tag";
+    echo
+  fi;
+  echo
+}
+
 
 function zz {
    cd "$(z | fzf | awk '{print $2}')"
 }
 
-function amend {
-    git commit -a --amend --no-edit && gpb -f
-}
-
-
-function ghash {
-    git log --format='%H' $@
-}
-
 function fingerprintSSH {
     for file in *.pub; do echo "[$file]: $(ssh-keygen -l -E md5  -f "$file")"; done
 }
-
-##
-# Open a file from a project inside inside vim
-# Args 1 : string directory to filter ex: op jobs will look for files inside jobs
+alias nvim='~/dev/utils/nvim.appimage'
 op() {
   local dir=".";
 
@@ -298,39 +313,22 @@ op() {
       dir="$1/.";
   fi
 
-  local file="$(find "$dir" -type f -not -path '*node_modules*' -and -not -path '*.git/*' -and -not -path './image/__*' | fzf -m)";
+  local file="$(find "$dir" -type f -not -path '*node_modules*' -and -not -path '*.git/*' -and -not -path './image/__*' | fzf -m | sed 's|^./||g' |xargs)";
 
   if [ -z "$file" ]; then
       echo 'you did not select a single file';
       return 1;
   fi
-
-  vim "$file"
-}
-                                                                                           
-
-treesize() {
-  du -k -d 1 | sort -nr | awk '
-     BEGIN {
-        split("KB,MB,GB,TB", Units, ",");
-     }
-     {
-        u = 1;
-        while ($1 >= 1024) {
-           $1 = $1 / 1024;
-           u += 1
-        }
-        $1 = sprintf("%.1f %s", $1, Units[u]);
-        print $0;
-     }
-    '
+  ~/dev/utils/nvim.appimage -p $file
 }
 
-e() {
+
+h() {
 
   local dir=".";
-  local bin="nvim";
-  local level="4";
+  local file;
+  local bin="hx";
+  local level="8";
 
   for option in "$@"; do
     case "$option" in
@@ -348,6 +346,11 @@ e() {
       ;;
       *)
         if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
+          # Test if it is a file
+          if [ -f "$option" ]; then
+            file="$option";
+          fi
+
           dir="${option}/.";
         fi
       ;;
@@ -355,9 +358,20 @@ e() {
     shift
   done
 
-  local filePath="$(find "$dir" \
+
+  # Open the file
+  if [ -n "$file" ]; then
+    "$bin" "$file";
+    return 0
+  fi
+
+
+   local filePath="$(find "$dir" \
      -maxdepth "$level" \
      -type f \
+     -not -name '*.pyc' \
+     -not -path '*hidden-*' \
+     -not -path '*.yarn/*' \
      -not -path '*node_modules*' \
      -not -path '*.parcel-cache*' \
      -and -not -path '*.git/*' \
@@ -368,7 +382,78 @@ e() {
      return 0;
    fi;
 
-   "$bin" "$filePath"
+  if [ "$bin" = 'echo' ]; then
+    realpath "$filePath";
+    return 0
+  fi
+
+  "$bin" "$filePath"
+}
+e() {
+
+  local dir=".";
+  local file;
+  local bin="$HOME/dev/utils/nvim.appimage";
+  local level="8";
+
+  for option in "$@"; do
+    case "$option" in
+      -L=*)
+        level="${option#*=}"
+      ;;
+      -b)
+        bin='bat'
+      ;;
+      -r)
+        bin='cat'
+      ;;
+      -p)
+        bin='echo'
+      ;;
+      *)
+        if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
+          # Test if it is a file
+          if [ -f "$option" ]; then
+            file="$option";
+          fi
+
+          dir="${option}/.";
+        fi
+      ;;
+     esac
+    shift
+  done
+
+
+  # Open the file
+  if [ -n "$file" ]; then
+    "$bin" "$file";
+    return 0
+  fi
+
+
+   local filePath="$(find "$dir" \
+     -maxdepth "$level" \
+     -type f \
+     -not -name '*.pyc' \
+     -not -path '*hidden-*' \
+     -not -path '*.yarn/*' \
+     -not -path '*node_modules*' \
+     -not -path '*.parcel-cache*' \
+     -and -not -path '*.git/*' \
+     -and -not -path './image/__*' \
+     | fzf --preview 'bat {-1} --color=always')";
+
+   if [ -z "$filePath" ]; then
+     return 0;
+   fi;
+
+  if [ "$bin" = 'echo' ]; then
+    realpath "$filePath";
+    return 0
+  fi
+
+  "$bin" "$filePath"
 }
 
 v(){
@@ -383,20 +468,29 @@ vp(){
   e "$@" -p
 }
 
-# see files inside git status
-vc() {
+fd() {
   preview="git diff $@ --color=always -- {-1}"
   git diff $@ --name-only | fzf -m --ansi --preview $preview
 }
 
-# copy last command
 clast() {
   local cmd="$(fc -ln -1 | awk '{$1=$1}1')";
   echo "$cmd" | copy > /dev/null;
   echo "$cmd"
 }
 
+stopDocker() {
+  local container="$(docker container ls | awk '{if(NR>1)print}' | fzf --tac  | cut -d ' ' -f1)";
+  echo docker container stop "$container"
+  docker container stop "$container"
+}
+
+runShaarli() {
+  cd ~/dev/utils/shaarli;
+  php -S 0.0.0.0:8080
+}
+
 protonvpn-get-user() {
-  #https://github.com/jaraco/keyring 
+  #https://github.com/jaraco/keyring
   keyring get ProtonVPN ProtonUser
 }
