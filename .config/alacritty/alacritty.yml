@@ -5,6 +5,7 @@ font:
 window:
   dimensions:
     columns: 120
+    lines: 30
   padding:
     y: 5
     x: 5

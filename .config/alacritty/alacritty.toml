@@ -1,0 +1,54 @@
+live_config_reload = true
+
+[colors.bright]
+black = "#556572"
+blue = "#599ECD"
+cyan = "#57AFB2"
+green = "#8AAA70"
+magenta = "#B2709A"
+red = "#C45871"
+white = "#acbecc"
+yellow = "#DEB377"
+
+[colors.cursor]
+cursor = "#9770b2"
+text = "#13222e"
+
+[colors.dim]
+black = "#293845"
+blue = "#3A7FAD"
+cyan = "#399092"
+green = "#6B8B50"
+magenta = "#93517A"
+red = "#A53851"
+white = "#80919f"
+yellow = "#C09458"
+
+[colors.normal]
+black = "#3f4f5b"
+blue = "#4496cd"
+cyan = "#42abab"
+green = "#81a559"
+magenta = "#b35d8d"
+red = "#ca3e5a"
+white = "#96a8b5"
+yellow = "#ebb062"
+
+[colors.primary]
+background = "#13222e"
+foreground = "#96a8b5"
+
+[colors.selection]
+background = "#4496cd"
+text = "#13222e"
+
+[font]
+size = 14.0
+
+[window.dimensions]
+columns = 120
+lines = 30
+
+[window.padding]
+x = 5
+y = 5
