@@ -9,10 +9,10 @@ gutters = ["diagnostics", "spacer", "line-numbers"]
 render = "all"
 
 [editor.whitespace.characters]
-space = "·"
-nbsp = "🚩"
-tab = "→"
-newline = "⏎"
+space = " "
+nbsp = "␣"
+tab = " "
+newline = " "
 tabpad = "·" # Tabs will look like "→···" (depending on tab width)
 
 [editor.soft-wrap]
