@@ -393,7 +393,7 @@ e() {
 
   local dir=".";
   local file;
-  local bin="$HOME/dev/utils/nvim.appimage";
+  local bin="nvim";
   local level="8";
 
   for option in "$@"; do
@@ -409,6 +409,9 @@ e() {
       ;;
       -p)
         bin='echo'
+      ;;
+      -p)
+        bin='fx'
       ;;
       *)
         if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
@@ -466,6 +469,10 @@ vr(){
 
 vp(){
   e "$@" -p
+}
+
+vj(){
+  e "$@" -j
 }
 
 fd() {
