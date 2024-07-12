@@ -45,6 +45,9 @@ text = "#13222e"
 [font]
 size = 14.0
 
+[window]
+option_as_alt = "OnlyLeft"
+
 [window.dimensions]
 columns = 120
 lines = 30
