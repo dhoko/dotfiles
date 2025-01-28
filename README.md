@@ -1,6 +1,10 @@
 dotfiles
 ========
 
+## 2025
+
+- _macos_: Move windows *ctrl + cmd + click* `defaults write -g NSWindowShouldDragOnGesture -bool true` [source](https://www.reddit.com/r/MacOS/comments/mwuaqr/comment/gvkdb0e/)
+
 ## 2023
 
 - Add Helix editor config
