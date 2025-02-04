@@ -1,0 +1,506 @@
+alias l='ls -CF --color=auto'
+alias la='ls -alF --color=auto'
+alias ll='ls -lhF --color=auto'
+alias lt='ls -lht --color=auto'
+alias alert_helper='history|tail -n1|sed -e "s/^\s*[0-9]\+\s*//" -e "s/;\s*alert$//"'
+alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png "[0] "'
+
+alias dnode="npx nodemon --inspect-brk"
+
+alias clock='watch -n 1 -t date'
+
+# Dodo for the eeepc
+alias dodo='sudo /etc/acpi/hibernate.sh'
+
+alias pi='ssh pi@192.168.0.22'
+alias wpi='ssh www-data@192.168.0.22'
+
+
+alias gis='git status'
+function commit() {
+  git commit -a -S -m "$@"
+}
+alias gpush='git push origin '
+alias gpb='git push origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpob='git pull origin $(git rev-parse --abbrev-ref HEAD)'
+alias gog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias backToTheFuture='git reset --hard HEAD~1'
+function glink() {
+  git commit --allow-empty -m "$@"
+}
+alias ghb='git checkout -b'
+alias gch='git checkout'
+alias gpo='git pull origin'
+alias clone='git clone --depth 1'
+alias grename='git commit --amend -m'
+alias gadd='git add $(git ls-files --others --exclude-standard --modified --exclude bibi | uniq | fzf -m)'
+alias gcleanstate='gch $(git diff --name-only | uniq | fzf -m)'
+alias editis='vim $(git diff --name-only | uniq | fzf)'
+alias gcb='git checkout $(git branch | fzf)'
+
+
+function rebase() {
+  git fetch;
+  git rebase "${1:-$(git branch -r | fzf | xargs)}";
+}
+
+function amend {
+    git commit -a --amend --no-edit $* && gpb -f
+}
+
+
+function ghash {
+    git log --format='%H' $@
+}
+
+function gpmr {
+  local branch="$(git rev-parse --abbrev-ref HEAD)";
+  local opt="-o merge_request.create -o merge_request.target=$branch -o merge_request.remove_source_branch";
+
+  git push origin "$branch" $opt
+}
+
+function pullswitch() {
+  BRANCH="$1"
+  git fetch origin "$BRANCH:$BRANCH"
+  gch "$BRANCH"
+}
+
+
+#CORS active Chromium
+alias cors='/usr/lib/chromium/chromium %U --disable-web-security'
+
+#Return Temperature CPU
+alias tropique='watch sensors'
+
+# Tree
+alias tree='tree -L 1'
+
+alias ..='cd ..'
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+#Build a local server on :8000 to serve static file or custom port
+function server() {
+  local ipLocale="$(ip a | grep -oE '192\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)";
+  echo "${ipLocale}:${1:-8000}";
+  python -m SimpleHTTPServer $@
+
+}
+
+#Front-server livereload cross plateform via ws://
+alias front-serve='http-server & browser-sync start  --files "**/*.html,**/*.css,**/*.js" --proxy="localhost:8080"'
+
+#get my public IP
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# Get Local ip
+alias ipHome="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+
+# Extract archives - use: extract <file>
+# Credits to http://dotfiles.org/~pseup/.bashrc
+function extract() {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2) tar xjf $1 ;;
+      *.tar.gz) tar xzf $1 ;;
+      *.bz2) bunzip2 $1 ;;
+      *.rar) rar x $1 ;;
+      *.gz) gunzip $1 ;;
+      *.tar) tar xf $1 ;;
+      *.tbz2) tar xjf $1 ;;
+      *.tgz) tar xzf $1 ;;
+      *.zip) unzip $1 ;;
+      *.Z) uncompress $1 ;;
+      *.7z) 7z x $1 ;;
+      *.xz) unxz -k $1;;
+      *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+
+alias hadopi='sudo ngrep -d eth0 -q -W byline "^(GET|POST) .*"'
+alias johnny='echo "ha que coucou"'
+
+alias bashsource='source ~/.bashrc'
+
+# Convert to base 64 a file - call alias with filename
+alias to64='openssl base64 -in '
+
+# flush cache
+alias cacheDrop='su -c "sync && echo 3 > /proc/sys/vm/drop_caches"'
+
+# flush swap
+alias flush-swap="echo 'sync && swapoff -a && sync && swapon -a' | sudo /bin/bash"
+
+# Copy output
+alias copy='xclip -sel clip && echo "Copy to the clipboard"'
+
+
+# Create a data URL from a file
+function dataurl() {
+  local mimeType=$(file -b --mime-type "$1")
+  if [[ $mimeType == text/* ]]; then
+    mimeType="${mimeType};charset=utf-8"
+  fi
+  echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+# Mount my external HD
+alias icybox='su -c "mount -t ntfs-3g /dev/sdb1 /media/icybox"'
+alias icyboxout='su -c "umount -t ntfs-3g /dev/sdb1 /media/icybox"'
+
+alias nano='nano -c'
+
+# copy ssh key
+alias copyssh='xclip -sel clip < ~/.ssh/id_rsa.pub'
+
+# Display colors
+alias termcolor='printf "\e[%dm%d dark\e[0m  \e[%d;1m%d bold\e[0m\n" {30..47}{,,,} #'
+
+# Set US international Keyboard
+alias clavier='su -c "setxkbmap us -variant intl"'
+
+# Backup Shaarli
+alias backupShaarli='/home/dhoko/dev/scripts/backupShaarli.sh'
+
+# Set bash
+function usebash() {
+    sudo usermod -s /bin/bash $1
+}
+
+# Tunnel (http://sebastien.saunier.me/blog/2013/11/06/stay-safe-on-unencrypted-public-wi-fi-networks.html)
+alias tunnel='~/vpn/sshuttle/sshuttle --dns \
+              --daemon --pidfile=/tmp/sshuttle.pid --remote=elysion 0/0'
+alias tunnelx='[[ -f /tmp/sshuttle.pid ]] && kill $(cat /tmp/sshuttle.pid) && echo "disconnected"'
+
+# Create fake files (1Mo) from an array
+function fakefiles() {
+  a=("$@")
+  ((last_idx=${#a[@]} - 1))
+  b=${a[last_idx]}
+  unset a[last_idx]
+
+  for i in "${a[@]}" ; do
+    echo "Create a fake file for : " $i;
+    dd if=/dev/zero of=$name.tar.gz bs=1k count=1024;
+  done
+}
+
+
+# Display OS version
+alias myOS='lsb_release -a'
+
+# Rename files in a directory
+function mvFile() {
+  for file in $(ls);
+  do
+    mv ${file%%.*}.${file#*.} $@.${file#*.};
+  done;
+}
+
+# Start Symfony server
+function sfServer() {
+  php app/console server:run $@ && php app/console assetic:dump --watch
+}
+
+# count the occurrences of a string within a file
+function countWordInFile() {
+  grep -o "$1" $2 | wc -l
+}
+
+# Count lines of code for an extension in a directory
+# Thanks to @HugoGiraudel
+function countLinesCode() {
+  ( find ./ -type f -name "*.$1" -print0 | xargs -0 cat ) | wc -l
+}
+
+# KDE 5 reload plasma without logging out
+# from http://askubuntu.com/questions/481329/can-i-restart-the-kde-plasma-desktop-without-logging-out
+alias reloadPlasma='killall plasmashell && kstart plasmashell &'
+
+
+# Clean GTK cache and remove database for zeitgeist (synapse)
+alias cleanGtk='echo '' > ~/.local/share/recently-used.xbel && rm ~/.local/share/zeitgeist/activity.sqlite'
+
+function meteo  () {
+  curl -4 wttr.in/$@
+}
+
+alias killGnome='killall -3 gnome-shell'
+alias reloadGnome='gnome-shell --replace'
+alias forceReload='gnome-session-quit --no-prompt'
+
+alias sortSize='find . -exec exiftool -S -t -q -Directory -FileName -FileSize -ImageSize  {} + | sort -k2n,2'
+
+alias dnsEnForce='sudo sh -c "echo nameserver 9.9.9.9 > /etc/resolv.conf"';
+
+
+function deploy() {
+  local branch="${2:-$(git --no-pager branch -r --list '*deploy-*' -vv --sort=committerdate  --format='%(refname:lstrip=3)
+    Date: %(committerdate:relative) (%(committerdate:short))
+    From: %(authorname)
+    Commit: %(contents:subject)
+    Description: %(contents:body)' | fzf --tac -e | xargs)}";
+
+  if [[ "$branch" != deploy-*  ]]; then
+    echo "👊 The branch must be deploy-<target>";
+  else
+    npm run deploy -- --branch="$branch" --api="${1:-build}" $3
+  fi;
+}
+
+function version() {
+ cat "node_modules/${1:-$(ls node_modules | fzf)}/package.json" | jq .version
+}
+
+function tardiff() {
+    git archive -o latest.tar "$(git rev-parse HEAD)" $(git diff --name-only "$(git log --pretty=format:'%H' -n 1 -2 | tail -1)" "$(git rev-parse HEAD)");
+}
+
+function versionInstalled() {
+
+  if ! [ -d "node_modules/$1" ]; then
+    return 0;
+  fi;
+  # Compat MacOS without gawk -> that's why we use sed too :/
+  local version="$(cat "node_modules/$1/package.json" | awk '/"_resolved": "(.+)"/{print $2}' | sed 's/"//g;s/,//g')";
+  printf '%-20s' "[$1]" "$version";
+  echo
+
+  if [ -n "$2" ]; then
+    local tag="$(cat "node_modules/$1/package.json" | awk '/"version": "(.+)"/{print $2}' | sed 's/"//g;s/,//g';)";
+    printf '%-20s' "[$1]" "$tag";
+    echo
+  fi;
+  echo
+}
+
+
+function zz {
+   cd "$(z | fzf | awk '{print $2}')"
+}
+
+function fingerprintSSH {
+    for file in *.pub; do echo "[$file]: $(ssh-keygen -l -E md5  -f "$file")"; done
+}
+op() {
+  local dir=".";
+
+  if [ -n "$1" ]; then
+      dir="$1/.";
+  fi
+
+  local file="$(find "$dir" -type f -not -path '*node_modules*' -and -not -path '*.git/*' -and -not -path './image/__*' | fzf -m | sed 's|^./||g' |xargs)";
+
+  if [ -z "$file" ]; then
+      echo 'you did not select a single file';
+      return 1;
+  fi
+  nvim -p $file
+}
+
+
+h() {
+
+  local dir=".";
+  local file;
+  local bin="hx";
+  local level="8";
+
+  for option in "$@"; do
+    case "$option" in
+      -L=*)
+        level="${option#*=}"
+      ;;
+      -b)
+        bin='bat'
+      ;;
+      -r)
+        bin='cat'
+      ;;
+      -p)
+        bin='echo'
+      ;;
+      *)
+        if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
+          # Test if it is a file
+          if [ -f "$option" ]; then
+            file="$option";
+          fi
+
+          dir="${option}/.";
+        fi
+      ;;
+     esac
+    shift
+  done
+
+
+  # Open the file
+  if [ -n "$file" ]; then
+    "$bin" "$file";
+    return 0
+  fi
+
+
+   local filePath="$(find "$dir" \
+     -maxdepth "$level" \
+     -type f \
+     -not -name '*.pyc' \
+     -not -path '*hidden-*' \
+     -not -path '*.yarn/*' \
+     -not -path '*node_modules*' \
+     -not -path '*.parcel-cache*' \
+     -and -not -path '*.git/*' \
+     -and -not -path './image/__*' \
+     | fzf --preview 'bat {-1} --color=always')";
+
+   if [ -z "$filePath" ]; then
+     return 0;
+   fi;
+
+  if [ "$bin" = 'echo' ]; then
+    realpath "$filePath";
+    return 0
+  fi
+
+  "$bin" "$filePath"
+}
+e() {
+
+  local dir=".";
+  local file;
+  local bin="nvim";
+  local level="8";
+
+  for option in "$@"; do
+    case "$option" in
+      -L=*)
+        level="${option#*=}"
+      ;;
+      -b)
+        bin='bat'
+      ;;
+      -r)
+        bin='cat'
+      ;;
+      -p)
+        bin='echo'
+      ;;
+      -j)
+        bin='fx'
+      ;;
+      *)
+        if [ -n "$option" ] && ! [[ "$option" =~ ^- ]]; then
+          # Test if it is a file
+          if [ -f "$option" ]; then
+            file="$option";
+          fi
+
+          dir="${option}/.";
+        fi
+      ;;
+     esac
+    shift
+  done
+
+
+  # Open the file
+  if [ -n "$file" ]; then
+    "$bin" "$file";
+    return 0
+  fi
+
+
+   local filePath="$(find "$dir" \
+     -maxdepth "$level" \
+     -type f \
+     -not -name '*.pyc' \
+     -not -path '*hidden-*' \
+     -not -path '*.yarn/*' \
+     -not -path '*node_modules*' \
+     -not -path '*.parcel-cache*' \
+     -and -not -path '*.git/*' \
+     -and -not -path './image/__*' \
+     | fzf --preview 'bat {-1} --color=always')";
+
+   if [ -z "$filePath" ]; then
+     return 0;
+   fi;
+
+  if [ "$bin" = 'echo' ]; then
+    realpath "$filePath";
+    return 0
+  fi
+
+  "$bin" "$filePath"
+}
+
+v(){
+  e "$@" -b
+}
+
+vr(){
+  e "$@" -r
+}
+
+vp(){
+  e "$@" -p
+}
+
+vj(){
+  e "$@" -j
+}
+
+fd() {
+  preview="git diff $@ --color=always -- {-1}"
+  git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+
+clast() {
+  local cmd="$(fc -ln -1 | awk '{$1=$1}1')";
+  echo "$cmd" | pbcopy > /dev/null;
+  echo "$cmd"
+}
+
+stopDocker() {
+  local container="$(docker container ls | awk '{if(NR>1)print}' | fzf --tac  | cut -d ' ' -f1)";
+  echo docker container stop "$container"
+  docker container stop "$container"
+}
+
+runShaarli() {
+  cd ~/dev/utils/shaarli;
+  php -S 0.0.0.0:8080
+}
+
+protonvpn-get-user() {
+  #https://github.com/jaraco/keyring
+  keyring get ProtonVPN ProtonUser
+}
+
+
+diffjson() {
+  difft $@ --color always | less -R
+}

@@ -1,0 +1,16 @@
+export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:/opt/homebrew/opt/curl/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/node@20/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/node@20/include"
+
+export LDFLAGS="-L/opt/homebrew/opt/curl/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
+
+. /opt/homebrew/etc/profile.d/z.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -r ~/.zsh_aliases ] && source ~/.zsh_aliases
+
+export GPG_TTY=$(tty)
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
