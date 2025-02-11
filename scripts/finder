@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
 
+findCodeNodeModules() {
+    # Bind arguments of finder if we add some
+    FZF_DEFAULT_COMMAND="rg -l '$1' -g '!hidden-*' --no-ignore -t js" \
+    fzf \
+      --sort \
+      --preview="[[ ! -z {} ]] && rg -C3 -p {q} -g '!hidden-*' {}"  \
+      --phony -q "$1" \
+      --bind "change:reload:rg -l {q} -g '!hidden-*' --no-ignore -t js" \
+      --preview-window="70%:wrap" \
+      --print-query
+  
+}
+
 findCode() {
-  FZF_DEFAULT_COMMAND="rg -l '$1' -g '!hidden-*'" \
+    # Bind arguments of finder if we add some
+    FZF_DEFAULT_COMMAND="rg -l '$1' -g '!hidden-*'" \
     fzf \
       --sort \
       --preview="[[ ! -z {} ]] && rg -C3 -p {q} -g '!hidden-*' {}"  \
@@ -10,9 +24,16 @@ findCode() {
       --bind "change:reload:rg -l {q} -g '!hidden-*'" \
       --preview-window="70%:wrap" \
       --print-query
-  }
+}
 
-file="$(findCode "$@")";
+
+if [[ "$*" =~ '--deps'  ]]; then
+  file="$(findCodeNodeModules "$@")";
+else
+  file="$(findCode "$@")";
+fi
+  
+
 
 if [ -n "$file" ]; then
   query="$(head -1 <<< "$file")";
@@ -31,12 +52,15 @@ EOT
   if [ "$(wc -l <<< "$output")" -gt 1 ]; then
     #output="$(echo "$output" | fzf --reverse)";
     getLineNumber="echo {} | cut -d':' -f1 | head -1"
-    focusLine="$getLineNumber | xargs -I % sh -c 'bat --color=always  -H % ${filePath}'"
+
+    # echo "============== ${getLineNumber}"
+    focusLine="$getLineNumber | xargs -I % bash -c 'bat --color=always --line-range %:+15 --line-range %:-15 -H % ${filePath}'"
 
     output="$( echo "$output" | fzf \
       --no-sort \
       --reverse \
       --tiebreak=index \
+      --highlight-line \
       --no-multi \
       --ansi \
       --preview="$focusLine" )"
