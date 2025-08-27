@@ -30,7 +30,7 @@ findCode() {
 if [[ "$*" =~ '--deps'  ]]; then
   file="$(findCodeNodeModules "$@")";
 else
-  file="$(findCode "$@")";
+  file="$(findCode "$*")";
 fi
   
 
