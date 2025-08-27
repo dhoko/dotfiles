@@ -107,7 +107,7 @@ kubectl() {
   kubectl $@
 }
 
-export PATH="$PATH:/Users/dhoko/Library/Python/3.11/bin:/opt/homebrew/opt/node@20/bin"
+export PATH="$PATH:/Users/dhoko/Library/Python/3.11/bin:/opt/homebrew/opt/node@20/bin:/Users/aurelien/Library/Python/3.13/bin"
 export PIPENV_SHELL='/bin/zsh'
 
 

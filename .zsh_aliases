@@ -504,3 +504,7 @@ protonvpn-get-user() {
 diffjson() {
   difft $@ --color always | less -R
 }
+
+appconfig() {
+  fx storage/config/config-app.json ".[$(fx storage/config/config-app.json 'keys'  | tr -d '[], ' | awk 'NF' | tac | fzf)]"
+}
