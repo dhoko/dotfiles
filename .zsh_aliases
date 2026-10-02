@@ -37,6 +37,7 @@ alias gadd='git add $(git ls-files --others --exclude-standard --modified --excl
 alias gcleanstate='gch $(git diff --name-only | uniq | fzf -m)'
 alias editis='vim $(git diff --name-only | uniq | fzf)'
 alias gcb='git checkout $(git branch | fzf)'
+alias remove-untracted='rm $(git ls-files --others --exclude-standard --modified --exclude bibi | uniq | fzf -m)'
 
 
 function rebase() {
@@ -326,7 +327,7 @@ h() {
   local dir=".";
   local file;
   local bin="hx";
-  local level="8";
+  local level="13";
 
   for option in "$@"; do
     case "$option" in
@@ -370,6 +371,8 @@ h() {
      -not -name '*.pyc' \
      -not -path '*hidden-*' \
      -not -path '*.yarn/*' \
+     -not -path '*venv*' \
+     -not -path '*mypy_cache*' \
      -not -path '*node_modules*' \
      -not -path '*.parcel-cache*' \
      -and -not -path '*.git/*' \
@@ -507,4 +510,7 @@ diffjson() {
 
 appconfig() {
   fx storage/config/config-app.json ".[$(fx storage/config/config-app.json 'keys'  | tr -d '[], ' | awk 'NF' | tac | fzf)]"
+}
+localesconfig() {
+  fx storage/config/config-locales.json ".[$(fx storage/config/config-locales.json 'keys'  | tr -d '[], ' | awk 'NF' | tac | fzf)]"
 }

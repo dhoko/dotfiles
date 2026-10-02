@@ -107,10 +107,22 @@ kubectl() {
   kubectl $@
 }
 
-export PATH="$PATH:/Users/dhoko/Library/Python/3.11/bin:/opt/homebrew/opt/node@20/bin:/Users/aurelien/Library/Python/3.13/bin"
+export GOPATH="$(go env GOPATH)"
+export PATH="$PATH:/Users/dhoko/Library/Python/3.11/bin:/opt/homebrew/opt/node@20/bin:/Users/aurelien/Library/Python/3.13/bin;/Users/aurelien/go/bin"
+# Lumo code stis there
+export PATH="/Users/aurelien/.local/bin:$PATH"
 export PIPENV_SHELL='/bin/zsh'
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  
 
+
+
+# pnpm
+export PNPM_HOME="/Users/aurelien/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

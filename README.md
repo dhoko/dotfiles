@@ -77,3 +77,7 @@ amixer set Master toggle
 ## Setup vim
 
 - [VimBundle](https://github.com/VundleVim/Vundle.vim)
+
+## Helix LSP
+
+With UV -> `uv tool install ty@latest`
